@@ -1,0 +1,36 @@
+export default function Questions() {
+
+    const questions = ["Eu precisava de menos sono", "Eu me sentia com mais energia e mais ativo(a)", 
+        "Eu estava mais autoconfiante",
+        "Eu apreciava mais o meu trabalho",
+        "Eu estava mais sociável (fazia mais ligações, saia mais)",
+        "Eu queria viajar ou viajava mais",
+        "Eu tinha tendência a dirigir mais rápido ou me arriscar mais enquanto dirigia",
+        "Eu gastava mais ou gastava dinheiro demais",
+        "Eu me arriscava mais em minha vida diária (no meu trabalho e/ou outras atividades)",
+        "Eu estava fisicamente mais ativo(a) (caminhada, esporte, etc.)",
+        "Eu planejava mais atividades e projetos",
+        "Eu tinha mais ideias, eu estava mais criativo(a)",
+        "Eu ficava menos tímido(a) ou inibido(a)",
+        "Eu usava roupas/maquiagem mais coloridas e extravagantes",
+        "Eu queria mais encontrar ou de fato me encontrava com mais pessoas",
+        "Eu estava mais interessado(a) em sexo e/ou tinha desejo sexual aumentado",
+        "Eu paquerava mais e/ou estava sexualmente mais ativo(a)",
+        "Eu falava mais",
+        "Eu pensava mais rápido",
+        "Eu fazia mais piadas ou trocadilhos quando falava",
+        "Eu me distraía com mais facilidade",
+        "Eu me envolvia em muitas coisas novas",
+        "Meus pensamentos pulavam de assunto rapidamente",
+        "Eu fazia coisas mais rapidamente e/ou com maior facilidade",
+        "Eu ficava mais impaciente e/ou ficava irritado(a) mais facilmente",
+        "Eu podia ser cansativo(a) ou irritante para os outros",
+        "Eu me envolvia mais em discussões e disputas",
+        "Meu humor estava melhor, mais otimista",
+        "Eu bebia mais café",
+        "Eu fumava mais cigarros",
+        "Eu bebia mais álcool",
+        "Eu usava mais drogas (sedativos, ansiolíticos, estimulantes, entre outros)"
+
+    ]
+}
