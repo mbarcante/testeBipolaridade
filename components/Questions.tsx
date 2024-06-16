@@ -2,7 +2,7 @@ interface Question {
   text: string; // Text of the question
 }
 
-  export const questions: Question[] =  [{text: "Eu estava mais autoconfiante"},
+  export const Questions: Question[] =  [{text: "Eu estava mais autoconfiante"},
         {text: "Eu apreciava mais o meu trabalho"}, 
         {text:"Eu estava mais sociável (fazia mais ligações, saia mais)"},
         {text:"Eu queria viajar ou viajava mais"},

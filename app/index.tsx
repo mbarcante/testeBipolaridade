@@ -1,8 +1,7 @@
 import { View } from "react-native";
 
-import { questions } from '../components/Questions'
+import { Questions } from '../components/Questions'
 import QuestionsWithCheckbox from '../components/QuestionsWithCheckbox';
-import styles from '../styles/Index.style'
 export default function Index() {
 
     const handleFinishAssessment = (yesCount: number) => {
@@ -10,8 +9,8 @@ export default function Index() {
     };
   
     return (
-      <View style={styles.container}>
-        <QuestionsWithCheckbox questions={questions} onFinishAssessment={handleFinishAssessment} />
+      <View>
+        <QuestionsWithCheckbox questions={Questions} onFinishAssessment={handleFinishAssessment} />
       </View>
     );
 }
