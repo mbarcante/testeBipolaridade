@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, Button } from 'react-native';
 import CheckBox from 'expo-checkbox';
-import style from './styles/QuestionsWithCheckbox.css'
+import styles from './styles/QuestionsWithCheckbox';
+
 interface Question {
   text: string; // Question text
 }
@@ -14,56 +15,77 @@ interface QuestionsWithCheckboxProps {
 const QuestionsWithCheckbox = ({ questions, onFinishAssessment }: QuestionsWithCheckboxProps) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [yesCount, setYesCount] = useState<number>(0);
+  const [selectedAnswers, setSelectedAnswers] = useState<boolean[]>(Array(questions.length).fill(false));
+  const [quizFinished, setQuizFinished] = useState<boolean>(false);
 
   const handleCheckboxChange = (isChecked: boolean) => {
-    if (isChecked) {
-      setYesCount(yesCount + 1);
-    } else {
-      setYesCount(Math.max(0, yesCount - 1));
-    }
+    const updatedAnswers = [...selectedAnswers];
+    updatedAnswers[currentQuestionIndex] = isChecked;
+    setSelectedAnswers(updatedAnswers);
+    setYesCount(updatedAnswers.filter(answer => answer).length);
   };
 
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1)
-      // setYesCount(0); // Reset yes count for the next question
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else if (onFinishAssessment) {
       onFinishAssessment(yesCount); // Call callback with final yes count
     }
   };
 
   const handlePreviewsQuestion = () => {
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex - 1)
-      // setYesCount(0); // Reset yes count for the next question
-    } else if (onFinishAssessment) {
-      onFinishAssessment(yesCount); // Call callback with final yes count
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
     }
   };
+
+  const handleEndAssesment = () => {
+    setQuizFinished(true);
+  };
+
+  if (quizFinished) {
+    if (yesCount > 18) {
+      return (
+              <View style={styles.container}>
+                  <Text>Parabéns! Você é bipolar!</Text>
+              </View>
+            )
+    } else {
+      return (
+        <View style={styles.container}>
+            <Text>Que pena :/ Tente novamente mais tarde.</Text>
+        </View>
+      )
+    }
+  }
 
   const currentQuestion = questions[currentQuestionIndex];
 
   return (
-    <View >
-      <Text style={style.container}>
+    <View>
+      <Text style={styles.container}>
         Question {currentQuestionIndex + 1} of {questions.length}
       </Text>
       <Text>{currentQuestion.text}</Text>
       <View>
-      <Text>Sim</Text>
+        <Text>Sim</Text>
         <CheckBox
-          value= {yesCount > 0} // Checkbox reflects "Yes" selection state
+          value={selectedAnswers[currentQuestionIndex]} // Checkbox reflects "Yes" selection state
           onValueChange={handleCheckboxChange}
         />
         <Text>Não</Text>
-        <CheckBox value={false} onValueChange={() => {}} disabled />
+        <CheckBox
+          value={!selectedAnswers[currentQuestionIndex]}
+          onValueChange={(isChecked) => handleCheckboxChange(!isChecked)}
+        />
       </View>
       <Text> {yesCount}</Text>
       <Button title="Próxima pergunta" onPress={handleNextQuestion} disabled={currentQuestionIndex === questions.length - 1} />
-      <Button title="Pergunta anterior" onPress={handlePreviewsQuestion} disabled={currentQuestionIndex === questions.length - 1} />
+      <Button title="Pergunta anterior" onPress={handlePreviewsQuestion} disabled={currentQuestionIndex === 0} />
+
+      <Button title='Terminar sessão' onPress={handleEndAssesment}></Button>
     </View>
   );
 };
 
 export default QuestionsWithCheckbox;
-
