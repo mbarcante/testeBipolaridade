@@ -2,6 +2,15 @@ import React, { useState } from 'react';
 import { View, Text, Button } from 'react-native';
 import CheckBox from 'expo-checkbox';
 import styles from './styles/QuestionsWithCheckbox';
+interface QuestionsWithCheckboxStyles {
+  button: string; // Style class for buttons
+}
+
+interface ButtonProps {
+  title: string;
+  onPress: () => void;
+  disabled?: boolean; // Optional disabled prop
+}
 
 interface Question {
   text: string; // Question text
@@ -46,14 +55,14 @@ const QuestionsWithCheckbox = ({ questions, onFinishAssessment }: QuestionsWithC
   if (quizFinished) {
     if (yesCount > 18) {
       return (
-              <View style={styles.container}>
-                  <Text>Parabéns! Você é bipolar!</Text>
-              </View>
-            )
+        <View style={styles.container}>
+          <Text>Parabéns! Você é bipolar!</Text>
+        </View>
+      )
     } else {
       return (
         <View style={styles.container}>
-            <Text>Que pena :/ Tente novamente mais tarde.</Text>
+          <Text>Que pena :/ Tente novamente mais tarde.</Text>
         </View>
       )
     }
@@ -62,28 +71,49 @@ const QuestionsWithCheckbox = ({ questions, onFinishAssessment }: QuestionsWithC
   const currentQuestion = questions[currentQuestionIndex];
 
   return (
-    <View>
-      <Text style={styles.container}>
-        Question {currentQuestionIndex + 1} of {questions.length}
+    <View style={styles.container}>
+      <Text style={styles.questionText}>
+        Pergunta {currentQuestionIndex + 1} of {questions.length}
       </Text>
-      <Text>{currentQuestion.text}</Text>
-      <View>
-        <Text>Sim</Text>
+      <Text style={styles.questionText}>{currentQuestion.text}</Text>
+      <View style={styles.checkboxContainer}>
+        <View>
+        <Text style={styles.checkboxText}>Sim</Text>
         <CheckBox
           value={selectedAnswers[currentQuestionIndex]} // Checkbox reflects "Yes" selection state
           onValueChange={handleCheckboxChange}
         />
-        <Text>Não</Text>
+        </View>
+        <View>
+        <Text style={styles.checkboxText}>Não</Text>
         <CheckBox
           value={!selectedAnswers[currentQuestionIndex]}
           onValueChange={(isChecked) => handleCheckboxChange(!isChecked)}
         />
+        </View>
       </View>
-      <Text> {yesCount}</Text>
-      <Button title="Próxima pergunta" onPress={handleNextQuestion} disabled={currentQuestionIndex === questions.length - 1} />
-      <Button title="Pergunta anterior" onPress={handlePreviewsQuestion} disabled={currentQuestionIndex === 0} />
+      
+      <Text style={styles.checkboxText}> {yesCount}</Text>
 
-      <Button title='Terminar sessão' onPress={handleEndAssesment}></Button>
+      <View style={styles.buttonContainer}>
+      
+      
+      <View style={styles.button}>
+        <Button
+          title="Pergunta anterior"
+          onPress={handlePreviewsQuestion}
+          disabled={currentQuestionIndex === 0} />
+      </View>
+      <View style={styles.button}>
+        <Button title='Terminar sessão' onPress={handleEndAssesment}></Button>
+      </View>
+      <View style={styles.button}>
+        <Button title="Próxima pergunta"
+          onPress={handleNextQuestion}
+          disabled={currentQuestionIndex === questions.length - 1}
+        />
+      </View>
+      </View>
     </View>
   );
 };
